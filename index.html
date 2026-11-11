@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en" class="no-js" data-clearance="classified">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KwikModel | Clearance required</title>
+<meta name="description" content="Early access to something special. AI changed what's possible in HVAC design, and what we built with it is clearance only. Request clearance to see inside.">
+<meta name="theme-color" content="#061530">
+<meta property="og:title" content="KwikModel | Clearance required">
+<meta property="og:description" content="Early access to something special. Request clearance to see inside.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preload" href="assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/main.css">
+
+<script>
+  // Runs before first paint so a cleared visitor never sees the redacted state flash.
+  (function () {
+    var d = document.documentElement;
+    d.classList.remove('no-js'); d.classList.add('js', 'is-loading');
+    try { if (localStorage.getItem('km.clearance') === 'cleared') d.setAttribute('data-clearance', 'cleared'); } catch (e) {}
+  })();
+</script>
+<script type="importmap">
+{ "imports": { "three": "./assets/vendor/three/three.module.min.js", "three/addons/": "./assets/vendor/three/" } }
+</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+
+<!-- Ink texture for the rubber stamps -->
+<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <filter id="ink" x="-6%" y="-10%" width="112%" height="120%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="7" result="grain"/>
+    <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.9 1.86" result="speckle"/>
+    <feComposite in="SourceGraphic" in2="speckle" operator="in" result="inked"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="3" result="warp"/>
+    <feDisplacementMap in="inked" in2="warp" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<!-- Opening sequence -->
+<div class="boot" aria-hidden="true">
+  <div class="boot__panel boot__panel--top"></div>
+  <div class="boot__panel boot__panel--bottom"></div>
+  <div class="boot__body">
+    <img class="boot__mark" src="assets/img/kwikmodel-mark.svg" alt="" width="56" height="92">
+    <dl class="boot__log">
+      <div><dt>File</dt><dd data-boot-line>KM-01</dd></div>
+      <div><dt>Viewer</dt><dd data-boot-line>Unverified</dd></div>
+      <div><dt>Access</dt><dd data-boot-line data-boot-access>Public only</dd></div>
+    </dl>
+    <div class="boot__count"><span data-boot-count>000</span></div>
+  </div>
+</div>
+
+<!-- One persistent WebGL stage that the page scrolls over -->
+<div class="gl" aria-hidden="true">
+  <canvas id="scene"></canvas>
+  <div class="gl__labels" id="scene-labels"></div>
+</div>
+
+<div class="frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- The inspection lens (hero only) -->
+<div class="lens" aria-hidden="true">
+  <div class="lens__ring"></div>
+  <div class="lens__ticks"><i></i><i></i><i></i><i></i></div>
+  <div class="lens__read"><span data-lens-xy>X 0000 · Y 0000</span><span>Inspecting</span></div>
+</div>
+
+<header class="bar">
+  <a class="bar__logo" href="#top" aria-label="KwikModel, back to top">
+    <img src="assets/img/kwikmodel-logo.svg" alt="KwikModel" width="193" height="92">
+  </a>
+  <nav class="bar__nav" aria-label="Sections">
+    <a href="#record"><span>01</span>On the record</a>
+    <a href="#classified"><span>02</span>Classified</a>
+    <a href="#terms"><span>03</span>The terms</a>
+  </nav>
+  <div class="bar__end">
+    <p class="status" role="status" aria-live="polite">
+      <i class="status__dot"></i>
+      <span class="when-classified">Top secret</span>
+      <span class="when-cleared">Cleared</span>
+    </p>
+    <a class="btn btn--gold btn--sm" href="#clearance" data-magnetic data-cta>
+      <span class="btn__label when-classified">Request clearance</span>
+      <span class="btn__label when-cleared">Open the files</span>
+    </a>
+  </div>
+</header>
+
+<aside class="hud" aria-hidden="true">
+  <div class="hud__sheet"><span>Sheet</span><b data-hud-n>01</b><span>/ 06</span></div>
+  <div class="hud__name" data-hud-name>Cover</div>
+  <div class="hud__rule"><i data-hud-bar></i></div>
+</aside>
+
+<main id="content">
+
+  <!-- 01 · COVER -->
+  <section class="hero" id="top" data-sheet="Cover">
+    <dl class="hero__meta">
+      <div><dt>File</dt><dd data-scramble>KM-01</dd></div>
+      <div><dt>Subject</dt><dd data-scramble>The next KwikModel</dd></div>
+      <div><dt>Status</dt><dd><span class="when-classified" data-scramble>Classified</span><span class="when-cleared">Declassified for you</span></dd></div>
+    </dl>
+
+    <div class="hero__main">
+      <p class="eyebrow hero__eyebrow"><i></i>Early access to something special</p>
+      <h1 class="hero__title">
+        <span class="ln"><span class="ln__in"><span class="when-classified">You’re not</span><span class="when-cleared">You’re</span></span></span>
+        <span class="ln"><span class="ln__in"><span class="when-classified">supposed to</span><span class="when-cleared">cleared to</span></span></span>
+        <span class="ln"><span class="ln__in">see this. <em><span class="when-classified">Yet.</span><span class="when-cleared">Now.</span></em></span></span>
+      </h1>
+      <div class="stamp hero__stamp" data-stamp>
+        <span class="when-classified">Top secret</span>
+        <span class="when-cleared">Cleared</span>
+      </div>
+    </div>
+
+    <div class="hero__foot">
+      <p class="hero__lede">AI changed what’s possible in HVAC design. We put it to work building breakthrough features and workflows you won’t find anywhere else.</p>
+      <div class="hero__cta">
+        <a class="btn btn--gold" href="#clearance" data-magnetic data-cta>
+          <span class="btn__label when-classified">Request clearance</span>
+          <span class="btn__label when-cleared">Open the files</span>
+          <svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn--line" href="#record">
+          <span class="btn__label">See what’s on the record</span>
+          <svg class="btn__arrow btn__arrow--down" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <p class="hero__hint" aria-hidden="true">
+      <span class="hero__hint-fine">Move to look inside</span>
+      <span class="hero__hint-coarse">Drag to look inside</span>
+    </p>
+  </section>
+
+  <!-- 02 · THE BRIEF -->
+  <section class="brief" data-sheet="The brief">
+    <p class="eyebrow"><i></i>The brief</p>
+    <p class="brief__text" data-scrub-words>But the same AI makes great ideas easy to copy. So for now, it’s <em>clearance only.</em> We want these tools in your hands long before our competitors catch on.</p>
+  </section>
+
+  <!-- 03 · ON THE RECORD -->
+  <section class="record" id="record" data-sheet="On the record">
+    <div class="record__pin">
+      <div class="record__copy">
+        <p class="eyebrow"><i></i>On the record</p>
+        <h2 class="record__title">See the whole system before it’s installed.</h2>
+        <p class="record__intro">What KwikModel does is no secret. Five workspaces take a project from the building model to the finished report.</p>
+
+        <div class="record__stages">
+          <div class="record__num" aria-hidden="true">
+            <div class="record__num-roll"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span></div>
+          </div>
+          <ol class="stages">
+            <li class="stage is-active">
+              <button type="button" class="stage__head" data-stage="0"><span class="stage__n">01</span><span class="stage__name">3D Model</span></button>
+              <div class="stage__body"><p>Define the home’s geometry and construction in 3D.</p></div>
+            </li>
+            <li class="stage">
+              <button type="button" class="stage__head" data-stage="1"><span class="stage__n">02</span><span class="stage__name">Loads</span></button>
+              <div class="stage__body"><p>Calculate the heating and cooling requirements for the design.</p></div>
+            </li>
+            <li class="stage">
+              <button type="button" class="stage__head" data-stage="2"><span class="stage__n">03</span><span class="stage__name">Equipment</span></button>
+              <div class="stage__body"><p>Compare equipment and select it for each HVAC system.</p></div>
+            </li>
+            <li class="stage">
+              <button type="button" class="stage__head" data-stage="3"><span class="stage__n">04</span><span class="stage__name">Ducts</span></button>
+              <div class="stage__body"><p>Lay out and size the duct system in the context of the home.</p></div>
+            </li>
+            <li class="stage">
+              <button type="button" class="stage__head" data-stage="4"><span class="stage__n">05</span><span class="stage__name">Reports</span></button>
+              <div class="stage__body"><p>Bring the model views and design information together in a PDF.</p></div>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="record__view" aria-hidden="true">
+        <div class="sheet">
+          <div class="sheet__block">
+            <img src="assets/img/kwikmodel-logo.svg" alt="" width="193" height="92">
+            <dl>
+              <div><dt>Project</dt><dd>Sample house</dd></div>
+              <div><dt>View</dt><dd>Plan</dd></div>
+              <div><dt>Scale</dt><dd>NTS</dd></div>
+              <div><dt>Sheet</dt><dd>M-1</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <div class="record__ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <!-- Tape -->
+  <div class="tape" aria-hidden="true">
+    <div class="tape__strip tape__strip--a"><div class="tape__run" data-tape="1"></div></div>
+    <div class="tape__strip tape__strip--b"><div class="tape__run" data-tape="-1"></div></div>
+  </div>
+
+  <!-- 04 · CLASSIFIED -->
+  <section class="files" id="classified" data-sheet="Classified">
+    <div class="files__pin">
+      <div class="files__track" id="files-track">
+        <header class="files__intro">
+          <p class="eyebrow"><i></i>Off the record</p>
+          <h2 class="files__title">
+            <span class="when-classified">What’s next is classified.</span>
+            <span class="when-cleared">The files are open.</span>
+          </h2>
+          <p class="files__lede when-classified">A step-by-step look at the new features and workflows. Every file stays redacted until you’re cleared.</p>
+          <p class="files__lede when-cleared">Welcome in. Here’s what we built to help your business grow.</p>
+          <p class="files__count"><b data-files-count>05</b> files <span class="when-classified">· 0 open</span><span class="when-cleared">· all open</span></p>
+        </header>
+        <!-- File cards are rendered from assets/js/content.js -->
+        <div class="files__list" id="files-list"></div>
+        <aside class="files__end">
+          <div class="when-classified">
+            <p class="files__end-kicker">End of public record</p>
+            <p class="files__end-title">The rest takes one email and your word.</p>
+            <a class="btn btn--gold" href="#clearance" data-magnetic><span class="btn__label">Request clearance</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="when-cleared">
+            <p class="files__end-kicker">End of briefing</p>
+            <p class="files__end-title">That’s the tour so far.</p>
+            <a class="btn btn--gold" href="#clearance" data-magnetic data-demo-link><span class="btn__label">Book a live demo</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </aside>
+      </div>
+      <div class="files__progress" aria-hidden="true"><i data-files-bar></i></div>
+    </div>
+  </section>
+
+  <!-- 05 · THE TERMS -->
+  <section class="memo" id="terms" data-sheet="The terms">
+    <div class="memo__desk">
+      <article class="memo__sheet">
+        <div class="stamp stamp--ink memo__stamp" data-stamp>Eyes only</div>
+        <header class="memo__head">
+          <p class="memo__kind">Memorandum</p>
+          <dl>
+            <div><dt>To</dt><dd>Anyone requesting clearance</dd></div>
+            <div><dt>From</dt><dd>KwikModel</dd></div>
+            <div><dt>Re</dt><dd>Why the secrecy</dd></div>
+          </dl>
+        </header>
+        <div class="memo__body">
+          <p data-memo-line>Exclusive access comes with responsibility. Keep what you see between us. When it’s time to spread the word, we’ll ask for your help.</p>
+          <ul class="memo__rules" data-memo-line>
+            <li><span>No screenshots</span></li>
+            <li><span>No sharing</span></li>
+            <li><span>No building competing software</span></li>
+          </ul>
+          <p data-memo-line>If you can’t agree to that, we understand and wish you the best.</p>
+          <p class="memo__pull" data-memo-line><mark>An honest no beats a broken promise.</mark></p>
+          <p data-memo-line>We’re trusting your integrity. We think you’ll love what’s inside.</p>
+        </div>
+        <footer class="memo__foot"><span>KM-01 / Memo</span><span>Page 1 of 1</span></footer>
+      </article>
+    </div>
+  </section>
+
+  <!-- 06 · CLEARANCE -->
+  <section class="gate" id="clearance" data-sheet="Clearance">
+    <div class="gate__copy">
+      <p class="eyebrow"><i></i>Form CL-01</p>
+      <h2 class="gate__title" data-reveal-words>
+        <span class="when-classified">Request clearance.</span>
+        <span class="when-cleared">You’re cleared.</span>
+      </h2>
+      <ol class="gate__steps" aria-label="Clearance steps">
+        <li data-step="1" class="is-on"><span>01</span>Request</li>
+        <li data-step="2"><span>02</span>Confirm</li>
+        <li data-step="3"><span>03</span>Cleared</li>
+      </ol>
+    </div>
+
+    <div class="gate__card" id="gate-card">
+      <div class="gate__card-head"><span>Clearance request</span><span>Sheet CL-01</span></div>
+
+      <!-- request -->
+      <form class="gate__state" data-gate="request" novalidate>
+        <div class="field">
+          <label for="km-email">Work email</label>
+          <input id="km-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@yourcompany.com" required>
+        </div>
+        <label class="pledge" for="km-agree">
+          <input id="km-agree" name="agree" type="checkbox" required>
+          <span class="pledge__box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.5"/></svg></span>
+          <span class="pledge__text">I give my word and agree to the <a href="#terms-dialog" data-open-terms>Confidentiality Terms</a>.</span>
+        </label>
+        <p class="gate__error" role="alert" hidden></p>
+        <button type="submit" class="btn btn--gold btn--block" data-magnetic>
+          <span class="btn__label">Request clearance</span>
+          <svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </button>
+        <p class="gate__note">We’ll email you a link. One click and you’re in.</p>
+      </form>
+
+      <!-- inbox -->
+      <div class="gate__state" data-gate="inbox" hidden>
+        <h3>Check your inbox</h3>
+        <p>We sent a link to <strong data-gate-email>you@yourcompany.com</strong>. Click it to confirm your email and get cleared.</p>
+        <div class="gate__demo" data-demo-only>
+          <p class="gate__demo-tag">Prototype only: stands in for the emailed link</p>
+          <button type="button" class="btn btn--gold btn--block" data-gate-confirm><span class="btn__label">Get cleared</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
+        </div>
+        <button type="button" class="link" data-gate-restart>Use a different email</button>
+      </div>
+
+      <!-- personal email -->
+      <div class="gate__state" data-gate="personal" hidden>
+        <h3>A personal briefing</h3>
+        <p>To keep things confidential, personal email addresses get a personal briefing. Book a quick call and we’ll give you the tour ourselves, or sign a short NDA and you’re cleared.</p>
+        <div class="gate__row">
+          <a class="btn btn--gold" href="#" data-call-link><span class="btn__label">Book a quick call</span></a>
+          <a class="btn btn--line btn--on-card" href="#" data-nda-link><span class="btn__label">Send me the NDA</span></a>
+        </div>
+        <button type="button" class="link" data-gate-restart>Have a company email? Use that instead.</button>
+      </div>
+
+      <!-- pending -->
+      <div class="gate__state" data-gate="pending" hidden>
+        <h3>Clearance pending</h3>
+        <p>Thanks for your patience.</p>
+      </div>
+
+      <!-- cleared -->
+      <div class="gate__state" data-gate="cleared" hidden>
+        <h3>Welcome in.</h3>
+        <p>Here’s what we built to help your business grow.</p>
+        <a class="btn btn--gold btn--block" href="#classified"><span class="btn__label">Open the files</span><svg class="btn__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="stamp stamp--solid gate__stamp" aria-hidden="true">Cleared</div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot__big" aria-hidden="true"><div class="foot__big-run" data-tape="1" data-tape-text="Clearance required"></div></div>
+  <div class="foot__row">
+    <div class="foot__brand">
+      <img src="assets/img/kwikmodel-logo.svg" alt="KwikModel" width="193" height="92">
+      <p>Residential HVAC design in one visual workspace.</p>
+    </div>
+    <nav class="foot__nav" aria-label="Footer">
+      <a href="#record">On the record</a>
+      <a href="#classified">Classified</a>
+      <a href="#terms">The terms</a>
+      <a href="#clearance">Request clearance</a>
+    </nav>
+  </div>
+  <div class="foot__base">
+    <span>© 2026 Coded Energy, Inc.</span>
+    <button type="button" class="link link--quiet when-cleared" data-clearance-reset>Reset clearance</button>
+    <img src="assets/img/coded-energy-logo.svg" alt="Coded Energy" width="150" height="15">
+  </div>
+</footer>
+
+<dialog class="terms" id="terms-dialog" aria-labelledby="terms-title">
+  <div class="terms__head">
+    <h2 id="terms-title">Confidentiality Terms</h2>
+    <button type="button" class="terms__close" data-close-terms aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="terms__body">
+    <p>[The approved Confidentiality Terms go here.]</p>
+  </div>
+</dialog>
+
+<noscript><style>.boot{display:none}</style></noscript>
+
+<script src="assets/vendor/gsap.min.js" defer></script>
+<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
